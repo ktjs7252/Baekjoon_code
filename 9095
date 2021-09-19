@@ -1,0 +1,27 @@
+#include <stdio.h>
+#pragma warning(disable:4996)
+int main(void)
+{
+    int dp[100001];
+    int N, i,T,j;
+
+    dp[1] = 1;
+    dp[2] = 2;
+    dp[3] = 4;
+
+    scanf("%d", &T);
+
+    for (i = 0; i < T; i++)
+    {
+        scanf("%d", &N);
+    
+        for (j = 4; j <= N; j++)
+        {
+            dp[j] = dp[j - 1] + dp[j - 2] +dp[j-3];
+        }
+        printf("%d\n", dp[N]);
+
+    }
+
+    return 0;
+}
