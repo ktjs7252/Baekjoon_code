@@ -1,0 +1,20 @@
+#include <stdio.h>
+
+int main(void)
+{
+	int n, i;
+
+	scanf("%d", &n);
+
+	if (n % 2 == 1)
+	{
+		printf("SK");
+	}
+	else if (n % 2 == 0)
+	{
+		printf("CY");
+	}
+
+
+	return 0;
+}
