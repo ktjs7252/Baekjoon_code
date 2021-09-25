@@ -1,0 +1,49 @@
+초기코드
+#include <stdio.h>
+#pragma warning(disable:4996)
+
+int main(void)
+{
+	int N,i;
+	int dp[91];
+	dp[1] = 1;
+	dp[2] = 1;
+
+	scanf("%d", &N);
+
+	for (i = 3; i <= N; i++)
+	{
+		dp[i] = dp[i - 1] + dp[i - 2];
+	}
+
+	printf("%d", dp[N]);
+
+
+	return 0;
+}
+
+---------------------------------
+맞춘코드
+#include <stdio.h>
+
+int main(void)
+{
+	int N,i;
+	long long dp[92];
+	dp[1] = 1;
+	dp[2] = 1;
+
+	scanf("%d", &N);
+
+	for (i = 3; i <= N; i++)
+	{
+		dp[i] = dp[i - 1] + dp[i - 2];
+	}
+
+	printf("%lld", dp[N]);
+
+
+	return 0;
+}
+
+높은수를 받았을때 30만자리가 넘어가기 떄문에 longlong으로 
