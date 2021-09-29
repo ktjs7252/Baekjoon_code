@@ -1,0 +1,31 @@
+#include <stdio.h>
+
+int max(int a, int b)
+{
+	return a > b ? a : b;
+}
+int main(void)
+{
+	int dp[301];
+	int g[301];
+	int i, n;
+	scanf("%d", &n);
+
+	for (i = 1; i <= n; i++)
+	{
+		scanf("%d", &g[i]);
+	}
+
+	dp[0] = 0;
+	dp[1] = g[1];
+	dp[2] = g[1] + g[2];
+	/*dp[3] = g[1] + g[3];*/
+	//조건은 연속으로 3번째 계단 밟을 수 없다. 달라진 조건은 마지막칸은 무조건 밟는다
+	for (i = 3; i <= n; i++)
+	{
+		dp[i] = max(dp[i - 2] + g[i],dp[i-3] +g[i - 1] + g[i]);
+
+	}
+	printf("%d", dp[n]);
+	return 0;
+}
