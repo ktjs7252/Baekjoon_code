@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <vector>
+#include <queue>
+#pragma warning(disable:4996)
+
+using namespace std;
+
+char map[101][101];
+bool visited[101][101];
+int M, N; //M은 세로 , N은 가로
+int dx[] = {-1,0,1,0};
+int dy[] = {0,1,0,-1};
+int our_team;  //W
+int another_team;  //B
+int  people;
+
+void dfs(int x, int y)
+{
+	int i,nx,ny;
+
+	visited[x][y] = true;
+	people++;
+
+	for (i = 0; i < 4; i++)
+	{
+		nx = x + dx[i];
+		ny = y + dy[i];
+		if (0 <= nx && nx < N && 0 <= ny && ny < M)
+		{
+			if (map[x][y] == map[nx][ny] && visited[nx][ny]==false)
+			{
+				dfs(nx, ny);
+			}
+		}
+	}
+}
+
+int main(void)
+{
+	int i, j;
+	scanf("%d %d", &N, &M);
+	// init
+	for (i = 0; i < M; i++)
+	{
+		for (j = 0; j < N; j++)
+		{
+			scanf("%1s", &map[i][j]);
+		}
+		if (j == N)
+		{
+			map[i][j] = NULL;
+		}
+	}
+	//main logic
+	for (i = 0; i < M; i++)
+	{
+		for (j = 0; j < N; j++)
+		{
+			if (visited[i][j] == false)
+			{
+				if (map[i][j] == 'W') 
+				{
+					people = 0;
+					dfs(i, j);
+					our_team+= people*people;
+				}
+				 if (map[i][j] == 'B')
+				{
+					people = 0;
+					dfs(i, j);
+				    another_team += people*people;
+				}
+			}
+		}
+	}
+	printf("%d %d",our_team,another_team);
+	return 0;
+}
+// w 81 49 = 130 our_team   9,7     16
+// b 1  64 =65  another_team  1, 8   9
+
+
+/*
+WBWWW
+WWWWW
+BBBBB
+BBBWW
+WWWWW
+내팀 : 9            0 0
+상대팀 : 1          0 1
+ 상대팀 : 8         2 0
+ 내팀 : 4           3 3
+내팀 : 3            4 0
+106 65*/
