@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+#define max(x, y) (x) > (y) ? (x) : (y) 
+int main(void)
+{
+	int arr[100002];
+	int N;
+	int i, j;
+	int dp[100002];
+	int  sum;
+	int answer = -1001;
+
+	scanf("%d", &N);
+
+	for (i = 1; i <= N; i++)
+	{
+		scanf("%d", &arr[i]);
+	}
+	sum = arr[1];
+	dp[1] = arr[1];
+
+	for (i = 2; i <= N; i++)
+	{
+        if (sum < 0)
+		{
+			sum = 0;
+		}
+        
+		sum += arr[i];
+		
+		if (sum > dp[i - 1])
+		{
+			dp[i] = sum;
+		}
+		else
+		{
+			dp[i] = dp[i - 1];
+		}
+
+		
+
+	}
+
+	for (i = 1; i <= N; i++)
+	{
+		answer = max(answer, dp[i]);
+	}
+	printf("%d", answer);
+	return 0;
+}
