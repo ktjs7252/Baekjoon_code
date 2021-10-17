@@ -1,0 +1,50 @@
+#include <stdio.h>
+
+#define min(x, y) (x) < (y) ? (x) : (y) 
+
+int main(void)
+{
+	int dp[1001][3];
+	int arr[1001][3];
+	int N;
+	int i, j;
+	int answer;
+
+	scanf("%d", &N);
+
+	for (i = 0; i < N; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			scanf("%d", &arr[i][j]);
+		}
+	}
+	dp[0][0] = arr[0][0];
+	dp[0][1] = arr[0][1];
+	dp[0][2] = arr[0][2];
+
+	for (i = 1; i < N; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			if (j == 0)
+			{
+				dp[i][j] = (min(dp[i - 1][1], dp[i - 1][2])) + arr[i][j];
+			}
+			else if (j == 1)
+			{
+				dp[i][j] = (min(dp[i - 1][0], dp[i - 1][2])) + arr[i][j];
+			}
+			else if (j == 2)
+			{
+				dp[i][j] = (min(dp[i - 1][0], dp[i - 1][1])) + arr[i][j];
+			}
+		}
+	}
+	
+	
+	answer = min(dp[N - 1][0], min(dp[N - 1][1], dp[N - 1][2]));
+	printf("%d", answer);
+
+		return 0;
+}
