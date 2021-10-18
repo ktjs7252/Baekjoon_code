@@ -1,0 +1,56 @@
+#include <stdio.h>
+
+#define max(x, y) (x) > (y) ? (x) : (y) 
+
+int dp[501][501];
+int arr[501][501];
+
+int main(void)
+{
+	int n;
+	int i, j;
+	int answer = 0;
+
+	scanf("%d", &n);
+	// init
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j <= i; j++)
+		{
+			scanf("%d", &arr[i][j]);
+		}
+	}
+
+	dp[0][0] = arr[0][0];
+	//main logic
+	for (i = 1; i < n; i++)
+	{
+		for (j = 0; j <= i; j++)
+		{
+			if (j == 0)
+			{
+				dp[i][j] = dp[i - 1][j] + arr[i][j];
+			}
+			else if (j == i)
+			{
+				dp[i][j] = dp[i - 1][j - 1] + arr[i][j];
+			}
+			else
+			{
+				dp[i][j] = max(dp[i-1][j - 1] + arr[i][j], dp[i-1][j] + arr[i][j]);
+			}
+		}
+	}
+
+
+	for (i = 0; i < n; i++)
+	{
+		for (j = 0; j <= i; j++)
+		{
+			answer = max(answer, dp[i][j]);
+		}
+	}
+
+	printf("%d", answer);
+	return 0;
+}
