@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+long long dp[101];
+
+int main(void)
+{
+	int T;
+	int i, j;
+	int n;
+
+	scanf("%d", &T);
+
+	dp[1] = 1;
+	dp[2] = 1;
+	dp[3] = 1;
+
+	for (i = 1; i <= T; i++)
+	{
+		scanf("%d", &n);
+		for (j = 4; j <= n; j++)
+		{
+			dp[j] = dp[j - 3] + dp[j - 2];
+		}
+		printf("%lld\n", dp[n]);
+	}
+
+
+	return 0;
+}
