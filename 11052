@@ -1,0 +1,38 @@
+#include <stdio.h>
+#pragma warning(disable:4996)
+#define MAX(a,b) a>b ? a:b
+
+int dp[1001];
+int arr[1001];
+
+int main(void)
+{
+	int N;
+	int i,j;
+	int answer = 0;
+
+	scanf("%d", &N);
+
+	for (i = 1; i <= N; i++)
+	{
+		scanf("%d", &arr[i]);
+	}
+
+	for (i = 1; i <= N; i++)
+	{
+		for (j = 1; j <= i; j++)
+		{
+			dp[i] = MAX(dp[i], dp[i - j] + arr[j]);
+		}
+
+	}
+	//printf("\n\n");
+	for (i = 1; i <= N; i++)
+	{
+		//printf("%d ", dp[i]);
+		answer = MAX(answer, dp[i]);
+	}
+
+	printf("%d", answer);
+	return 0;
+}
