@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+int t, n;
+string a, b;
+int main(){
+    cin >> t;
+    while(t--){
+        map<string, int> _map;
+        cin >> n;
+         for(int i = 0; i < n; i++){
+            cin >> a >> b;
+            _map[b]++;
+        }
+        long long ret = 1;
+        for(auto c : _map){
+            ret *= ((long long)c.second + 1);
+        }
+        ret--;
+        cout << ret << "\n";
+    }
+    return 0;
+}
+
+
+----------------------------------------이터널레이터를 쓴 타인의 코드
+#include <iostream>
+#include <string>
+#include <map>
+
+using namespace std;
+
+int T, N;
+
+int main() {
+    
+    int result;
+    
+    cin >> T;
+    
+    map<string, int> m; // key = string, key value = int
+    string clothes, kind;
+    
+    map<string, int>::iterator iter; // map<string, int> iterator ( = pointer )
+
+    
+    while(T--) {
+        
+        // 테스트 케이스마다 초기화
+        result = 1;
+        m.clear();
+        
+        // 입력
+        cin >> N;
+        
+        while(N--) {
+            
+            cin >> clothes >> kind;
+            
+            m[kind]++; // key를 kind로 갖고 있는 데이터의 value 1 증가
+
+            
+        }
+                
+        // map<string ,int>::iterator을 통해, 시작부터 끝까지 돎
+        for(iter = m.begin(); iter != m.end(); iter++) {
+            result *= iter->second + 1;
+        }
+        cout << result - 1 << endl;
+    }
+        
+}
