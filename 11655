@@ -1,0 +1,41 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string arr;
+
+int main()
+{
+	getline(cin,arr); //띄어쓰기를 포함한 문자열 
+	
+	for(int i=0;i<arr.size();i++)
+	{
+		if(arr[i]>='A' && arr[i]<='Z')
+		{
+			if(arr[i]+13>90)
+			{
+				arr[i]=arr[i]+13-26;
+			}
+			else
+			{
+				arr[i]=arr[i]+13;
+			}
+		}
+		else if(arr[i]>='a' &&arr[i]<='z')
+		{
+			if(arr[i]+13>122)
+			{
+				arr[i]=arr[i]+13-26;
+			}
+			else
+			{
+				arr[i]=arr[i]+13;
+			}
+		}
+		
+	}
+	
+	cout << arr;
+	
+	return 0;
+}
