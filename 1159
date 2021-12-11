@@ -1,0 +1,36 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string arr;
+char word[26];
+
+int main()
+{
+	int n;
+	int count=0;
+	int sign=1;
+	cin>>n;
+	
+	for(int i=0;i<n;i++)
+	{
+		cin>>arr;
+		
+		word[arr[0]-'a']++;
+	}
+	
+	for(int i=0;i<26;i++)
+	{
+		if(word[i]>=5)
+		{
+			sign=0;
+			printf("%c",i+'a');
+		}
+	}
+	if(sign==1)
+	{
+		printf("PREDAJA");
+	}
+	
+	return 0;
+}
