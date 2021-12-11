@@ -1,0 +1,39 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int a,b,c;
+
+int solve(int a,int b)
+{
+	long long result;
+	if(b==1)
+	{
+		return a%c;
+	}
+	else
+	{
+		result=solve(a,b/2);
+		if(b%2==1)
+		{
+			return ((result*result)%c*a)%c;
+		}
+		else
+		{
+			return (result*result)%c;
+		}
+	}
+	
+	
+	
+}
+
+int main()
+{
+	cin >> a>> b>>c;
+	
+	int answer=solve(a,b);
+	
+	cout<<answer;
+	return 0;
+}
