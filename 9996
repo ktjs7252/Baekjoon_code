@@ -1,0 +1,42 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+	int n;
+	int pos;
+	string arr;
+	string pattern;
+	string pre,next;
+	cin>>n;
+	cin>>pattern;
+	
+	pos=pattern.find('*');
+	pre=pattern.substr(0,pos);
+	next=pattern.substr(pos+1); //pos~end 
+	for(int i=0;i<n;i++)
+	{
+		 cin>>arr;
+		 
+		 if(pre.size()+next.size()>arr.size())
+		 {
+		 	printf("NE\n");
+		 }
+		 else
+		 {
+		 	if(arr.substr(0,pos)==pre && next==arr.substr(arr.size()-next.size()))
+		 	{
+		 		printf("DA\n");
+			 }
+			 else
+			 {
+			 	printf("NE\n");
+			 }
+		 }
+		
+		
+	}
+
+	return 0;
+}
