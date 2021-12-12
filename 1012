@@ -1,0 +1,69 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int m,n;
+int arr[51][51];
+int visited[51][51];
+int dx[]={-1,0,1,0};
+int dy[]={0,-1,0,1};
+
+void dfs(int x,int y)
+{
+	int nx,ny;
+	visited[x][y]=1;
+	
+	for(int i=0;i<4;i++)
+	{
+		nx=x+dx[i];
+		ny=y+dy[i];
+		
+		if(nx>=0 && nx<n && ny>=0 && ny<m)
+		{
+			if(arr[nx][ny]==1 && visited[nx][ny]==0)
+			{
+				dfs(nx,ny);
+			}
+		}
+	}
+}
+
+int main()
+{	
+	int text_case;
+	int k;
+	
+	cin>>text_case;
+	
+	for(int i=0;i<text_case;i++)
+	{
+		int a,b;
+		int answer=0;
+		cin>> m>>n>>k;
+		memset(arr, 0, sizeof(arr));
+		memset(visited,0,sizeof(visited));
+		
+		for(int j=0;j<k;j++)
+		{
+			cin>>a>>b;
+			arr[b][a]=1;
+		}
+		
+		for(int x=0;x<n;x++)
+		{
+			for(int y=0;y<m;y++)
+			{
+				if(arr[x][y]==1 && visited[x][y]==0)
+				{
+					dfs(x,y);
+					answer++;
+				}
+			}
+		}
+		cout<<answer<<"\n";
+
+	}
+	
+	
+	return 0;
+}
