@@ -1,0 +1,62 @@
+#include <bits/stdc++.h>
+#include <stack>
+using namespace std;
+
+int text_case;
+string arr;
+
+int main()
+{
+	cin>>text_case;
+	for(int k=0;k<text_case;k++)
+	{
+		int sign=1;
+		cin>>arr;
+		stack<char> s;
+		for(int i=0;i<arr.size();i++)
+		{
+		
+			if(s.empty())
+			{
+				s.push(arr[i]);
+			}
+			else
+			{
+				if(arr[i]=='(')
+				{
+					s.push(arr[i]);
+				}
+				else if(arr[i]==')')
+				{
+					if(s.top()=='(')
+					{
+						s.pop();
+					}
+					else
+					{
+						sign=0;
+						cout<<"NO"<<"\n";
+						break;
+					}
+				}
+			}
+		}
+		if(sign==0)
+		{
+			continue;
+		}
+		if(s.empty())
+		{
+			cout<<"YES"<<"\n";
+		}
+		else
+		{
+			cout<<"NO"<<"\n";
+		}
+		
+	}
+	
+
+	return 0;
+	
+}
