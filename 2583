@@ -1,0 +1,76 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int arr[101][101];
+int visited[101][101];
+int dx[] = { -1,0,1,0 };
+int dy[] = { 0,-1,0,1 };
+int m, n, k;
+int num;
+int answer[101];
+
+int dfs(int x, int y)
+{
+	int nx, ny;
+	visited[x][y] = 1;
+	num++;
+	for (int i = 0; i < 4; i++)
+	{
+		nx = x + dx[i];
+		ny = y + dy[i];
+
+		if (nx >= 0 && nx < m && ny >= 0 && ny < n)
+		{
+			if (visited[nx][ny] == 0 && arr[nx][ny] == 0)
+			{
+				dfs(nx, ny);
+			}
+		}
+
+	}
+	return num;
+}
+
+int main()
+{
+	int a, b, c, d;
+	int tmp = 0;
+	scanf("%d %d %d", &m, &n, &k);
+
+	for (int i = 0; i < k; i++)
+	{
+		scanf("%d %d %d %d", &a, &b, &c, &d);
+
+		for (int x = b; x < d; x++)
+		{
+			for (int y = a; y < c; y++)
+			{
+				arr[x][y] = 1;
+			}
+		}
+	}
+
+	for (int i = 0; i < m; i++)
+	{
+		for (int j = 0; j < n; j++)
+		{
+			if (arr[i][j] == 0 && visited[i][j] == 0)
+			{
+				num = 0;
+				answer[tmp++]=dfs(i, j);
+
+			}
+		}
+	}
+	sort(answer,answer+tmp);
+	printf("%d\n",tmp);
+	for (int i = 0; i < tmp; i++)
+	{
+		printf("%d ", answer[i]);
+	}
+
+
+
+	return 0;
+}
