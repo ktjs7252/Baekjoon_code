@@ -1,0 +1,64 @@
+#include <bits/stdc++.h> 
+using namespace std;
+
+int a[65][65];
+int t;
+
+string solve(int y,int x,int size){
+   string answer = "";
+   string b;
+   b+=(char)a[y][x]+'0';
+   if(size==1) return b;
+   //string(a[y][x]+'0',1);
+   
+   int tmp =a[y][x];
+   int sign=1;  
+   
+   for(int i=y;i<y+size;i++) //탐 
+   {
+      for(int j=x;j<x+size;j++)
+      {
+         if(a[i][j]!=tmp)
+         {
+            sign=0;
+         }
+      }
+   }
+  
+   if(sign==1) //같은경 
+   {
+      answer+=tmp+'0';
+   }
+   else //같지 않은경 
+   {
+       answer += '(';
+      answer+=solve(y,x,size/2); // 0 0 4
+      answer+=solve(y,x+size/2,size/2);  // 0 4
+       answer+=solve(y+size/2,x,size/2); //4 0
+      answer+=solve(y+size/2,x+size/2,size/2); //4 4
+       answer += ')';
+   } 
+   return answer;
+}
+
+int main()
+{
+   string arr; 
+   cin>>t;
+   
+   for(int i=0;i<t;i++)
+   {
+      for(int j=0;j<t;j++)
+      {
+         scanf("%1d",&a[i][j]);
+      }
+   }
+   
+   // 00 04 40 44
+   
+   cout << solve(0,0,t);
+   
+   return 0;
+}   
+   
+   
