@@ -1,0 +1,31 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int main()
+{
+	int n;
+	
+	cin>>n;
+	
+	int answer=665;
+	int cnt=0;
+	string s;
+	while(1)
+	{
+		if(cnt==n)
+		{
+			break;
+		}
+		answer++;
+		
+		s=to_string(answer);
+		if(s.find("666")!=-1){
+			cnt++;
+		}
+	}
+	
+	
+	cout<<answer;
+	
+}
