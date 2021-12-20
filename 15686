@@ -1,0 +1,76 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+struct pos{
+	int x,y;
+};
+int n,m;
+int arr[51][51];
+vector<pos> house,chicken,pick;
+int answer;
+
+
+void dfs(int now)
+{
+	if(pick.size()==m)
+	{
+		int x=0;
+		for(int i=0;i<house.size();i++)
+		{
+			int min_tmp=100000;
+			for(int j=0;j<pick.size();j++)
+			{
+				min_tmp=min(min_tmp,abs(house[i].x-pick[j].x)+abs(house[i].y-pick[j].y));
+			}
+			x+=min_tmp;
+		}
+		if(answer>x)
+		{
+			answer=x;
+		}
+	}
+	
+	for(int i=now;i<chicken.size();i++)
+	{
+		pick.push_back(chicken[i]);
+		dfs(i+1);
+		pick.pop_back();
+	}
+	
+	
+}
+
+
+int main()
+{
+	cin>>n>>m;
+	pos tmp;
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+			cin>>arr[i][j];
+			if(arr[i][j]==1)
+			{
+				tmp.x=i;
+				tmp.y=j;
+				house.push_back(tmp);
+			}
+			if(arr[i][j]==2)
+			{
+				tmp.x=i;
+				tmp.y=j;
+				chicken.push_back(tmp);
+			}
+		}
+	}
+	answer=1000000;
+	dfs(0);
+	
+	cout<<answer;
+	
+	
+	
+	return 0;
+}
