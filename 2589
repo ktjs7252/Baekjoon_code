@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int answer;
+int n,m;
+char arr[51][51];
+string s;
+int visited[51][51];
+int dx[]={-1,0,1,0};
+int dy[]={0,-1,0,1};
+
+void bfs(int x,int y)
+{
+	memset(visited,0,sizeof(visited));
+	queue <pair<int,int>> q;
+	q.push({x,y});
+	visited[x][y]=1;
+	while(q.size())
+	{
+		tie(x,y)=q.front();
+		//int x=q.front();
+		//int y=q.second();
+		q.pop();
+		for(int i=0;i<4;i++)
+		{
+			int nx=x+dx[i];
+			int ny=y+dy[i];
+			
+			if(nx>=0 && nx<n && ny>=0 && ny<m )
+			{
+				if(visited[nx][ny]==0 && arr[nx][ny]=='L')
+				{
+					visited[nx][ny]=visited[x][y]+1;
+					q.push({nx,ny});
+					answer=max(answer,visited[nx][ny]);
+				}
+			}
+			
+		}
+	}
+}
+
+int main()
+{
+	cin>>n>>m;
+	for(int i=0;i<n;i++)
+	{
+		cin>>s;
+		for(int j=0;j<m;j++)
+		{
+			arr[i][j]=s[j];
+		}
+	}
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<m;j++)
+		{
+			if(arr[i][j]=='L')
+			{
+				bfs(i,j);
+			}
+		}
+	}
+	
+	cout<<answer-1; // 방문처리는 1로 시작하되, 출력값은 자신의 자리를 보지 않기 때문에 1을 여기서 뺴줘야한다,
+	return 0;
+}
+
+
