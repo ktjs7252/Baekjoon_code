@@ -59,3 +59,38 @@ int main()
 	
 	return 0;
 }
+////////////////////////////////////
+#include <bits/stdc++.h>
+using namespace std;
+
+int arr[1000000];
+int n,k;
+int main()
+{
+	cin>>n>>k;
+	
+	fill(arr,arr+1000000,-1);
+	arr[n]=0;
+	queue <int> q;
+	q.push(n);
+	
+	while(arr[k]==-1)
+	{
+		int x=q.front();
+		q.pop();
+		
+		for(int i : {x-1,x+1,x*2})
+		{
+			if(i>=0 && x<=1000000)
+			{
+				arr[i]=arr[x]+1;
+				q.push(i);
+			}
+		}
+	}
+	
+	cout<<arr[k];
+	
+	
+	return 0;
+}
