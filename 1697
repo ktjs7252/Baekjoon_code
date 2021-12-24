@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int n,k;
+int visited[1000030];
+int answer;
+
+
+void bfs(int x)
+{
+	queue<pair<int,int>> q;
+	q.push({x,0});
+	
+	while(!q.empty())
+	{
+		int locate=q.front().first;
+		int cost=q.front().second;
+		q.pop();
+		
+		if(locate==k)
+		{
+			answer=cost;
+			break;
+		}
+		int a=locate-1;
+		int b=locate+1;
+		int c=locate*2;
+		
+		if(0<=a && visited[a]==0)
+		{
+			visited[a]=1;
+			q.push({a,cost+1});
+		}
+			if(b<=1000000 && visited[b]==0)
+		{
+			visited[b]=1;
+			q.push({b,cost+1});		}
+			if(c<=1000000 && visited[c]==0)
+		{
+			visited[c]=1;
+			q.push({c,cost+1});
+		}
+		
+	}
+	
+
+	
+	
+}
+
+int main()
+{
+	cin>>n>>k;
+	bfs(n);
+	cout<<answer;
+	
+	
+	
+	return 0;
+}
