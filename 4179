@@ -1,0 +1,109 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int r,c;
+char arr[1001][1001];
+int fire[1001][1001];
+int man[1001][1001];
+string s;
+queue <pair<int,int>> q;
+queue <pair<int,int>> q1;
+int dx[]={-1,0,1,0};
+int dy[]={0,-1,0,1};
+int sign=0;
+
+
+int main()
+{
+	cin>>r>>c;
+	for(int i=0;i<r;i++)
+	{
+		cin>>s;
+		for(int j=0;j<c;j++)
+		{
+			arr[i][j]=s[j];
+			if(arr[i][j]=='F')
+			{
+				q.push({i,j});
+				fire[i][j]=1;
+			}
+			if(arr[i][j]=='J')
+			{
+				q1.push({i,j});
+				man[i][j]=1;
+			}
+		}
+	}	
+	
+	while(!q.empty())
+	{
+		int x=q.front().first;
+		int y=q.front().second;
+		
+		q.pop();
+		
+		for(int i=0;i<4;i++)
+		{
+			int nx=x+dx[i];
+			int ny=y+dy[i];
+			
+			if(nx>=0 && nx<r && ny>=0 && ny <c && fire[nx][ny]==0)
+			{
+				if(arr[nx][ny]=='#') continue;
+				
+				fire[nx][ny]=fire[x][y]+1;
+				q.push({nx,ny});
+			}
+		}
+	}
+	
+	while(!q1.empty())
+	{
+		int x=q1.front().first;
+		int y=q1.front().second;
+		q1.pop();
+		
+		if(x==0 || y==0 || x==r-1 || y==c-1)
+		{
+			cout<<man[x][y];
+			sign=1;
+			break;
+		}
+		
+		for(int i=0;i<4;i++)
+		{
+			int nx=x+dx[i];
+			int ny=y+dy[i];
+			
+			if(nx>=0 && nx<r && ny>=0 && ny <c && man[nx][ny]==0)
+			{
+				if(arr[nx][ny]=='#') continue;
+				
+				if(fire[nx][ny]<=man[x][y]+1 && fire[nx][ny]!=0)
+				{
+					continue;
+				}
+				man[nx][ny]=man[x][y]+1;
+				q1.push({nx,ny});
+			}
+		}
+	}
+	if(sign==0)
+	{
+		cout<<"IMPOSSIBLE";
+	}
+	
+	
+	return 0;
+ } 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
