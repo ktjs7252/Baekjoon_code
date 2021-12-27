@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int arr[1000000];
+int tmp[1000000];
+int n,k;
+int main()
+{
+	cin>>n>>k;
+	
+	fill(arr,arr+1000000,-1);
+	arr[n]=0;
+	tmp[n]=1;
+	queue <int> q;
+	q.push(n);
+	                 
+	while(!q.empty())
+	{
+		int x=q.front();
+		q.pop();
+		
+		for(int i : {x-1,x+1,x*2})
+		{
+			if(0<i && i>=1000000) continue;
+			
+			if(arr[i]==-1)
+			{
+				arr[i]=arr[x]+1;
+				tmp[i]+=tmp[x];
+				q.push(i);
+			}
+			else if(arr[i]==arr[x]+1)
+			{
+				tmp[i]+=tmp[x];
+			}
+			
+		}
+	}
+	
+	cout<<arr[k]<<"\n";
+	cout<<tmp[k];
+	
+	
+	
+	return 0;
+}
