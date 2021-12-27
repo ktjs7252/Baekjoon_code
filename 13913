@@ -1,0 +1,63 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int r,c;
+int arr[1000000];
+int pre[1000000];
+pair<int,int> d[3]={{1,1},{1,-1},{2,0}};
+int here,_next,answer;
+vector <int> v;
+queue <int> q;
+
+int main()
+{
+	cin>>r>>c;
+	
+	arr[r]=1;
+	q.push(r);
+	
+	while(!q.empty())
+	{
+		here=q.front();
+		q.pop();
+		
+		if(here==c)
+		{
+			answer=arr[c];
+			break;
+		}
+		
+		for(int i=0;i<3;i++)
+		{
+			_next=here*d[i].first+d[i].second;
+			if(_next>=1000000 || _next<0 ||arr[_next]!=0) continue;
+			
+			arr[_next]=arr[here]+1;
+			pre[_next]=here;
+			q.push(_next);
+		}
+	}
+	
+	cout<<answer-1<<"\n";
+	
+	for(int i=c;i!=r;i=pre[i])
+	{
+		v.push_back(i);
+	}
+	v.push_back(r);
+	reverse(v.begin(),v.end());
+	for(int i=0;i<v.size();i++)
+	{
+		cout<<v[i]<<' ';
+	}
+	
+	
+	
+	
+	return 0;
+}
+
+
+
+
