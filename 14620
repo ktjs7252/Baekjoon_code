@@ -1,0 +1,104 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int n,answer=10000000;
+int arr[11][11];
+int cnt;
+int visited[11][11];
+int dx[]={-1,0,1,0};
+int dy[]={0,1,0,-1};
+
+
+int setflower(int x,int y)//꽃 놓기 
+{
+	visited[x][y]=1;
+	int s=arr[x][y];
+	
+	for(int i=0;i<4;i++)
+	{
+		int nx=x+dx[i];
+		int ny=y+dy[i];
+		if(nx>=0 &&nx<n && ny>=0 && ny<n)
+		{
+			visited[nx][ny]=1;
+			s+=arr[nx][ny];
+		}
+	}
+	return s;
+}
+void eraseflower(int x,int y) //꽃 지우기 
+{
+	visited[x][y]=0;
+	for(int i=0;i<4;i++)
+	{
+		int nx=x+dx[i];
+		int ny=y+dy[i];
+		
+		visited[nx][ny]=0;
+		
+	}
+}
+int check(int x,int y)
+{
+	if(visited[x][y]==1)
+	{
+		return 0;
+	}
+	
+	for(int i=0;i<4;i++)
+	{
+		int nx=x+dx[i];
+		int ny=y+dy[i];
+		
+		if(nx<0 || ny<0 || nx>=n || ny>=n || visited[nx][ny])
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+
+void flower(int cnt,int hap)
+{
+	if(cnt==3)
+	{
+	
+		answer=min(answer,hap);
+		return;
+	}
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+			if(check(i,j))
+			{
+				//printf("현재 %d %d\n",i,j);
+				flower(cnt+1,hap+setflower(i,j));
+				eraseflower(i,j);
+			}
+		}
+	}
+}
+
+int main()
+{
+	cin>>n;
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+			cin>>arr[i][j];
+		}
+	}
+
+	flower(0,0);
+	
+	cout<<answer;
+	
+	
+	return 0;
+}
