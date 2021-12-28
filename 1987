@@ -1,0 +1,61 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+char arr[21][21];
+int r,c;
+int visited[21][21];
+string s;
+int dx[]={-1,0,1,0};
+int dy[]={0,-1,0,1};
+int answer=-1;
+char word[27];
+int cnt;
+
+void dfs(int x,int y)
+{
+	cnt++;
+	word[arr[x][y]-'A']=1;
+	answer=max(answer,cnt);
+	//visited[x][y]=1;
+	for(int i=0;i<4;i++)
+	{
+		int nx=x+dx[i];
+		int ny=y+dy[i];
+		
+		if(nx>=0 && nx<r && ny>=0 && ny<c)
+		{
+			if(word[arr[nx][ny]-'A']==0)
+			{
+				dfs(nx,ny);
+				cnt--;
+				word[arr[nx][ny]-'A']=0;
+			}
+		}
+	}
+}  
+int main()
+{
+	cin>>r>>c;
+	
+	for(int i=0;i<r;i++)
+	{
+		cin>>s;
+		for(int j=0;j<c;j++)
+		{
+			arr[i][j]=s[j];
+		}
+	}
+	
+	dfs(0,0);
+/*	for(int i=0;i<r;i++)
+	{
+		for(int j=0;j<c;j++)
+		{
+			printf("%d ",visited[i][j]);
+		}
+		printf("\n");
+	}*/
+	cout<<answer;
+	return 0;
+}
