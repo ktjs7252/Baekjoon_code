@@ -278,7 +278,79 @@ int main()
 	
 	return 0;
 }
+-------------------------------------------
+(1992)
+#include<bits/stdc++.h>
 
+using namespace std;
+
+int arr[65][65];
+int n;
+string s;
+
+
+string solve(int x,int y,int size)
+{
+	string answer=""; //차이를 알아보자ㅓ
+	if(size==1)
+	{
+		string a;
+		a+=(char)arr[x][y]+'0';
+		return a;
+	}
+	int sign=1;
+	int tmp=arr[x][y];
+	
+	for(int i=x;i<x+size;i++)
+	{
+		for(int j=y;j<y+size;j++)
+		{
+			if(arr[i][j]!=tmp)
+			{
+				sign=0;
+			}
+		}
+	}
+	
+	if(sign==1)
+	{
+		answer+=tmp+'0';
+	}
+	else
+	{
+		answer+='(';
+		answer+=solve(x,y,size/2);
+		answer+=solve(x,y+size/2,size/2);
+		answer+=solve(x+size/2,y,size/2);
+		answer+=solve(x+size/2,y+size/2,size/2);
+		answer+=')';
+	}
+	
+	
+                                                                                                                                                                                                                 
+	return answer;
+}
+
+int main()
+{
+	cin>>n;
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+			scanf("%1d",&arr[i][j]); 
+		}
+	}
+	
+	cout<<solve(0,0,n);
+	
+	
+	
+	
+	
+	return 0;
+}
 
 
 
