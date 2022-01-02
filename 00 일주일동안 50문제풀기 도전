@@ -207,7 +207,77 @@ int main()
 	return 0;
 }
 ----------------------------------------------------------------------------
+(2583)
+#include <bits/stdc++.h>
 
+using namespace std;
+
+int m,n,k;
+int arr[101][101];
+int visited[101][101];
+int counting;
+int answer[101];
+int dx[]={-1,0,1,0};
+int dy[]={0,-1,0,1};
+int tmp;
+int dfs(int x,int y)
+{
+	visited[x][y]=1;
+	tmp++;
+	
+	for(int i=0;i<4;i++)
+	{
+		int nx=x+dx[i];
+		int ny=y+dy[i];
+		
+		if(nx>=0 && nx<m && ny>=0 &&ny<n)
+		{
+			if(visited[nx][ny]==0 && arr[nx][ny]==0)
+			{
+				dfs(nx,ny);
+			}
+		}
+	}
+	return tmp;
+}
+
+int main()
+{
+	cin>>m>>n>>k;
+	int a,b,c,d;
+	for(int i=0;i<k;i++)
+	{
+		cin>>a>>b>>c>>d;
+		
+		for(int x=b;x<d;x++)
+		{
+			for(int y=a;y<c;y++)
+			{
+				arr[x][y]=1;
+			}
+		}
+	}
+	for(int x=0;x<m;x++)
+	{
+		for(int y=0;y<n;y++)
+		{
+			if(visited[x][y]==0 && arr[x][y]==0)
+			{
+				tmp=0;
+				answer[counting++]=dfs(x,y);
+			}		
+		}
+    }
+	sort(answer,answer+counting);
+	cout<<counting<<"\n";
+	for(int i=0;i<counting;i++)
+	{
+		cout<<answer[i]<<" ";
+	}
+	
+	
+	return 0;
+}
 
 
 
