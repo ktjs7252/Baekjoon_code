@@ -401,7 +401,43 @@ int main()
 	 
 	return 0;
  } 
- 
+ ---------------------------------------------------------
+ (17928)
+ #include <bits/stdc++.h>
+#include<stack>
+using namespace std;
+
+int arr[1000001];
+int answer[1000001];
+int n;
+
+int main()
+{
+	cin>>n;
+	memset(answer,-1,sizeof(answer));
+	stack<int> s;
+	
+	for(int i=0;i<n;i++)
+	{
+		cin>>arr[i];
+		while(!s.empty()&&arr[i]>arr[s.top()])
+		{
+		
+				answer[s.top()]=arr[i];
+				s.pop();
+			
+		}
+		s.push(i);
+	}
+	
+	for(int i=0;i<n;i++)
+	{
+		cout<<answer[i]<<" ";
+	}
+	
+	
+	return 0;
+}
  
  
  
