@@ -121,3 +121,98 @@ int main()
 	
 	return 0;
 }
+-----------------------------
+(2468)
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int arr[101][101];
+int tmp[101][101];
+int visited[101][101];
+int n;
+int answer;
+int dx[]={-1,0,1,0};
+int dy[]={0,-1,0,1};
+int max_t;
+void dfs(int x,int y)
+{
+	visited[x][y]=1;
+	
+	for(int i=0;i<4;i++)
+	{
+		int nx=x+dx[i];
+		int ny=y+dy[i];
+		
+		if(nx>=0 && nx<n && ny>=0 && ny<n)
+		{
+			if(visited[nx][ny]==0 && tmp[nx][ny]==0)
+			{
+				dfs(nx,ny);
+			}
+		}
+	}
+}
+
+int main()
+{
+	cin>>n;
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+			cin>>arr[i][j];
+			max_t=max(max_t,arr[i][j]);
+		}
+	}
+	
+	int answer=0;
+	
+	for(int t=0;t<max_t;t++)
+	{
+		memset(visited,0,sizeof(visited));
+		memset(tmp,0,sizeof(tmp));
+		
+		for(int i=0;i<n;i++)
+		{
+			for(int j=0;j<n;j++)
+			{
+				if(arr[i][j]<=t)
+				{
+					tmp[i][j]=1;
+				}
+			}
+		}
+		
+		int counting=0;
+		
+		for(int i=0;i<n;i++)
+		{
+			for(int j=0;j<n;j++)
+			{
+				if(visited[i][j]==0 &&tmp[i][j]==0)
+				{
+					dfs(i,j);
+					counting++;
+				}
+			}
+		}
+		
+		answer=max(answer,counting);
+		
+	}
+	
+	cout<<answer;
+	return 0;
+}
+----------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
