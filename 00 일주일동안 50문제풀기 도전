@@ -438,7 +438,84 @@ int main()
 	
 	return 0;
 }
- 
+---------------------------------------------------------
+(4659)
+#include <bits/stdc++.h>
+
+using namespace std;
+
+
+int main()
+{
+	
+	while(1)
+	{
+		string s;
+		cin>>s;
+		
+		if(s=="end")
+		{
+			break;
+		}
+		
+		int sign=0;
+		int mo=0;
+		int ja=0;
+		int exist=0;
+		
+		for(int i=0;i<s.size();i++)
+		{
+			if(s[i]=='a' || s[i]=='e' || s[i]=='i' ||s[i]=='o'||s[i]=='u')
+			{
+				exist=1;
+				mo++;
+				ja=0;
+			}
+			else
+			{
+				mo=0;
+				ja++;
+			}
+			
+			if(mo==3 || ja==3)
+			{
+				sign=1;
+				break;
+			}
+			
+			if(s[i]==s[i+1])
+			{
+				if(s[i]=='e' || s[i]=='o')
+				{
+					continue;
+				}
+				else
+				{
+					sign=1;
+				}
+			}
+		}
+		
+		if(sign==1 || exist==0)
+		{
+			cout<<"<"<<s<<"> is not acceptable.\n";
+		}
+		else
+		{
+			cout<<"<"<<s<<"> is acceptable.\n";
+		}
+		
+		
+	}
+	
+	
+	
+	return 0;
+}
+//모음 a,e,i,o,u 반드시 한개 포함
+//같은 모음이나 자음이 3개 연속으로 오며 안됨
+//글자가 연속으로 두개오면 안됨 ee,oo제외 
+ ---------------------------------------------------------
  
  
  
