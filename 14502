@@ -1,0 +1,210 @@
+//첫번쨰 풀이
+
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int n,m;
+int arr[9][9];
+int tmp[9][9];
+vector<pair<int,int>> v,k;
+int dx[]={-1,0,1,0};
+int dy[]={0,-1,0,1};
+int answer;
+
+void dfs(int x,int y)
+{
+	tmp[x][y]=-1;
+	for(int i=0;i<4;i++)
+	{
+		int nx=x+dx[i];
+		int ny=y+dy[i];
+		
+		if(nx>=0 && ny>=0 && nx<n && ny<m)
+		{
+			if(tmp[nx][ny]==0)
+			{
+				dfs(nx,ny);
+			}
+		}
+	}
+}
+
+void go()
+{
+	memset(tmp,0,sizeof(tmp));
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<m;j++)
+		{
+			tmp[i][j]=arr[i][j];
+		}
+	}
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<m;j++)
+		{
+			if(tmp[i][j]==2)
+			{
+				dfs(i,j);
+			}
+		}
+	}
+	int kk=0;
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<m;j++)
+		{
+			if(tmp[i][j]==0)
+			{
+				kk++;
+			}
+		}
+	}
+	answer=max(answer,kk);
+}
+
+void solve(int size,int here)
+{
+	if(size==3)
+	{
+		go();
+		return;
+	}
+	
+	for(int i=here;i<v.size();i++)
+	{
+		arr[v[i].first][v[i].second]=1;
+		solve(size+1,i+1);
+		arr[v[i].first][v[i].second]=0;
+	}
+}
+
+int main()
+{
+	cin>>n>>m;
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<m;j++)
+		{
+			cin>>arr[i][j];
+			if(arr[i][j]==0)
+			{
+				v.push_back({i,j});
+			}
+		}
+	}
+	
+	solve(0,0);
+	
+	cout<<answer;
+	
+	return 0;
+}
+
+//두번째 풀이
+#include<bits/stdc++.h>
+
+using namespace std;
+
+int n,m;
+int arr[9][9];
+int tmp[9][9];
+int visited[9][9];
+vector<pair<int,int>> v;
+int answer;
+int dx[]={-1,0,1,0};
+int dy[]={0,1,0,-1};
+void dfs(int x,int y)
+{
+	tmp[x][y]=-1;
+	
+	for(int i=0;i<4;i++)
+	{
+		int nx=x+dx[i];
+		int ny=y+dy[i];
+		
+		if(nx>=0 && nx<n && ny>=0 && ny<m)
+		{
+			if(tmp[nx][ny]==0)
+			{
+				dfs(nx,ny);
+			}
+		}
+	}
+	
+}
+
+void solve()
+{
+	int kk=0;
+	memset(tmp,0,sizeof(tmp));
+	memset(visited,0,sizeof(visited));
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<m;j++)
+		{
+			tmp[i][j]=arr[i][j];
+		}
+	}
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<m;j++)
+		{
+			if(tmp[i][j]==2)
+			{
+				dfs(i,j);
+			}
+		}
+	}
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<m;j++)
+		{
+			if(tmp[i][j]==0)
+			{
+				kk++;
+			}
+		}
+	}
+	answer=max(answer,kk);
+}
+
+int main()
+{
+	cin>>n>>m;
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<m;j++)
+		{
+			cin>>arr[i][j];
+			if(arr[i][j]==0)
+			{
+				v.push_back({i,j});
+			}
+		}
+	}
+	
+	for(int i=0;i<v.size();i++)
+	{
+		for(int j=0;j<i;j++)
+		{
+			for(int k=0;k<j;k++)
+			{
+				arr[v[i].first][v[i].second]=arr[v[j].first][v[j].second]=arr[v[k].first][v[k].second]=1;
+				solve();
+				arr[v[i].first][v[i].second]=arr[v[j].first][v[j].second]=arr[v[k].first][v[k].second]=0;
+			}
+		}
+	}
+	cout<<answer;
+	
+	return 0;
+}
