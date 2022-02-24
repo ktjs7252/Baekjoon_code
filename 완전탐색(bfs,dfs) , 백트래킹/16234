@@ -1,0 +1,101 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int n,l,r;
+int arr[51][51];
+int visited[51][51];
+int dx[]={-1,0,1,0};
+int dy[]={0,-1,0,1};
+int sum,counting;
+vector<pair<int,int>> v;
+int answer;
+
+void dfs(int x,int y)
+{
+	visited[x][y]=1;
+	counting++;
+	sum+=arr[x][y];
+	v.push_back({x,y});
+	
+	for(int i=0;i<4;i++)
+	{
+		int nx=x+dx[i];
+		int ny=y+dy[i];
+		
+		if(nx>=0 && ny>=0 && nx<n && ny<n)
+		{
+			if(visited[nx][ny]==0)
+			{
+				if(abs(arr[x][y]-arr[nx][ny])>=l && abs(arr[x][y]-arr[nx][ny])<=r)
+				{
+					dfs(nx,ny);
+				}
+			}
+		}
+	}
+}
+
+void change()
+{
+	int tmp=sum/counting;
+	
+//	for(auto pair<int,int> i: v)
+//	{
+//		arr[i.first][i.second]=tmp;
+//	}
+	for(int i=0;i<v.size();i++)
+	{
+		arr[v[i].first][v[i].second]=tmp;
+	}
+//     for(auto i: v)
+//	{
+//		arr[i.first][i.second]=tmp;
+//	}
+}
+
+int main()
+{
+	cin>>n>>l>>r;
+	
+	for(int i=0;i<n;i++)
+	{
+		for(int j=0;j<n;j++)
+		{
+			cin>>arr[i][j];
+		}
+	}
+	
+	while(1)
+	{
+		int sign=0;
+		memset(visited,0,sizeof(visited));
+		
+		for(int i=0;i<n;i++)
+		{
+			for(int j=0;j<n;j++)
+			{
+				if(visited[i][j]==0)
+				{
+					v.clear();
+					sum=0;
+					counting=0;
+					dfs(i,j);
+					change();
+					if(v.size()>1)
+					{
+						sign=1;
+					}
+				}
+			}
+		}
+		if(sign==0)
+		{
+			break;
+		}
+		answer++;
+	}
+	
+	cout<<answer;
+	return 0;
+}
