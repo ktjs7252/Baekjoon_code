@@ -1,0 +1,217 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+int r,c;
+char arr[1501][1501];
+int visited[1501][1501];
+int dx[]={-1,0,1,0};
+int dy[]={0,1,0,-1};
+string s;
+int sign;
+queue <pair<int,int>> q;
+int answer;
+int k1,k2;
+int kk[1501][1501];
+
+
+void check()
+{
+	memset(kk,0,sizeof(kk));
+	queue<pair<int,int>> kkk;
+	kk[k1][k2]=1;
+	
+	kkk.push({k1,k2});
+	while(kkk.size())
+	{
+		int x=kkk.front().first;
+		int y=kkk.front().second;
+		kkk.pop();
+		
+		for(int i=0;i<4;i++)
+		{
+			int nx=x+dx[i];
+			int ny=y+dy[i];
+			
+			if(nx>=0 && ny>=0 && nx<r && ny<c && kk[nx][ny]==0)
+			{
+				if(arr[nx][ny]=='L')
+				{
+					sign=1;
+					return;
+				}
+				if(arr[nx][ny]=='.')
+				{
+					kkk.push({nx,ny});
+					kk[nx][ny]=kk[x][y]+1;
+				}
+			}
+		}
+		
+	}
+	return;
+}
+int main()
+{
+	cin>>r>>c;
+	
+	for(int i=0;i<r;i++)
+	{
+		cin>>s;
+		for(int j=0;j<c;j++)
+		{
+			arr[i][j]=s[j];
+			if(arr[i][j]=='L')
+			{
+				q.push({i,j});
+				visited[i][j]=1;
+				k1=i;
+				k2=j;
+			}
+		}
+	}
+	
+	while(1)
+	{
+		check();
+		if(sign==1)
+		{
+			break;
+		}
+		
+		queue<pair<int,int>>tmp;
+		
+		while(q.size())
+		{
+			int x=q.front().first;
+			int y=q.front().second;
+			q.pop();
+			
+			for(int i=0;i<4;i++)
+			{
+				int nx=x+dx[i];
+				int ny=y+dy[i];
+				
+				if(nx>=0 && ny>=0 && nx<r && ny<c && visited[nx][ny]==0)
+				{
+					if(arr[nx][ny]=='X')
+					{
+						tmp.push({nx,ny});
+						arr[nx][ny]='.';
+						visited[nx][ny]=visited[x][y]+1;
+					}
+					else
+					{
+						q.push({nx,ny});
+						visited[nx][ny]=visited[x][y]+1;
+					}
+				}
+			}
+		}
+		q=tmp;
+//		cout<<"\n\n\n";
+//		for(int i=0;i<r;i++)
+//		{
+//			for(int j=0;j<c;j++)
+//			{
+//				cout<<arr[i][j];
+//			}
+//			cout<<"\n";
+//		}
+		answer++;
+		
+	}
+	
+	
+	
+	cout<<answer;
+	
+	
+	
+	
+	return 0;
+}
+///////////////////////////////////////////////////////////
+#include <cstdio>
+#include <string>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+#include <queue>
+#include <stack>
+using namespace std;
+const int max_n = 1501;
+const int dx[4] = {1, 0, -1, 0};
+const int dy[4] = {0, 1, 0, -1}; 
+int visited_swan[max_n][max_n], visited[max_n][max_n], R, C, day, swanY, swanX;
+char _map[max_n][max_n];
+bool isSwanMeet;
+queue<pair<int, int>> waterQ, water_tempQ, swanQ, swan_tempQ;
+string s;
+void Qclear(queue<pair<int, int>> &q){
+   queue<pair<int, int>> empty;
+   swap(q,empty);
+}
+void water_melting(){
+    while(waterQ.size()){
+        int y = waterQ.front().first;
+        int x = waterQ.front().second;  
+        waterQ.pop();
+        for(int i = 0; i < 4; i++){
+            int ny = y + dy[i];
+            int nx = x + dx[i];
+            if(ny < 0 || ny >= R || nx < 0 || nx >= C || visited[ny][nx])continue;
+            if(_map[ny][nx] == 'X'){
+                visited[ny][nx] = 1; 
+                water_tempQ.push({ny, nx});
+                _map[ny][nx] = '.'; 
+            } 
+        }
+    }
+}
+void move_swan(){
+    while(swanQ.size()){
+        int y = swanQ.front().first;
+        int x = swanQ.front().second;  
+        swanQ.pop();
+        for(int i = 0; i < 4; i++){
+            int ny = y + dy[i];
+            int nx = x + dx[i];
+            if(ny < 0 || ny >= R || nx < 0 || nx >= C || visited_swan[ny][nx])continue;
+            if(_map[ny][nx] == '.')swanQ.push({ny, nx});
+            else if(_map[ny][nx] == 'X') swan_tempQ.push({ny, nx});
+            else if(_map[ny][nx] == 'L'){isSwanMeet = true; return;}
+            visited_swan[ny][nx] = 1;
+        }
+    }
+}
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+    cin >> R >> C;
+    for(int i = 0; i < R; i++){
+        cin >> s;
+        for(int j = 0; j < C; j++){
+            _map[i][j] = s[j];
+            if(_map[i][j] == 'L'){swanY = i; swanX = j;}
+            if(_map[i][j] == '.' || _map[i][j] == 'L')visited[i][j] = 1, waterQ.push({i, j});
+        }
+    } 
+    swanQ.push({swanY, swanX}); 
+    visited_swan[swanY][swanX] = 1; 
+    while(!isSwanMeet){ 
+        move_swan(); 
+        if(isSwanMeet) break;
+        water_melting();
+        waterQ = water_tempQ;
+        swanQ = swan_tempQ;
+        Qclear(water_tempQ);
+        Qclear(swan_tempQ);
+        day++;
+    }
+    cout << day << "\n";
+
+    return 0;
+}
