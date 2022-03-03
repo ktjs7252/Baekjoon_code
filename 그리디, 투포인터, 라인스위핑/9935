@@ -1,0 +1,33 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+string a;
+string b;
+string answer;
+
+int main()
+{
+	cin>>a;
+	cin>>b;
+	
+	for(int i=0;i<a.size();i++)
+	{
+		answer+=a[i];
+		if(answer.size()>=b.size() && answer.substr(answer.size()-b.size(),b.size())==b)
+		{
+			answer.erase(answer.end()-b.size(),answer.end());
+		}
+	}
+	if(answer.size())
+	{
+		cout<<answer;
+	}
+	else
+	{
+		cout<<"FRULA";
+	}
+	
+	
+	return 0;
+}
