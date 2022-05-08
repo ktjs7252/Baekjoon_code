@@ -59,7 +59,9 @@ int main()
 	
 	return 0;
 }
-////////////////////////////////////
+
+**두번째 풀이**
+
 #include <bits/stdc++.h>
 using namespace std;
 
