@@ -13,6 +13,7 @@ int length=1;
 
 int main()
 {
+	memset(visited,-1,sizeof(visited));
 	cin>>n>>k;
 	
 	for(int i=0;i<k;i++)
@@ -21,7 +22,7 @@ int main()
 		cin>>a>>b;
 		arr[a-1][b-1]=1;
 	}
-	
+	visited[0][0]=0;
 	cin>>l;
 	cin>>cur_time>>tmp;
 	while(1)
@@ -53,17 +54,17 @@ int main()
 			arr[x][y]=0;
 			length++;
 		}
-			printf("현재위치 : %d %d     %d   %d\n",x,y,_time,length);
+		//	printf("현재위치 : %d %d     %d   %d\n",x,y,_time,length);
 		if(x<0 || y<0 || x>=n || y>=n) //범위를 벗어나면 
 		{
-			printf("범위에 벗어남\n");
+		//	printf("범위에 벗어남\n");
 			cout<<_time;
 			return 0;
 		}
 		
-		if(visited[x][y]>0 &&visited[x][y]>=_time-length)
+		if(visited[x][y]>-1 &&visited[x][y]>=_time-length)
 		{
-			printf("몸에닿음\n");
+		//	printf("몸에닿음\n");
 			cout<<_time;
 			return 0;
 		 } 
