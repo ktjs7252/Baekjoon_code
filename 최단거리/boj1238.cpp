@@ -55,7 +55,7 @@ int main()
 	for(int i = 1; i <= n; i++){
         if(i == x) continue;  
         answer = max(answer, dist[i] + dist2[i]); 
-        cout<<dist[i]<<" "<<dist2[i]<<"\n";
+        
     }  
     cout<<answer;
 	
